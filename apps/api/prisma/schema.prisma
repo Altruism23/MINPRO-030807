@@ -19,3 +19,72 @@ model Sample {
 
   @@map("samples") // if you want to use snake_case format
 }
+
+model User {
+  id                           Int                      @id @default(autoincrement())
+  username                     String                   @unique
+  email                        String                   @unique
+  password                     String
+  isEventOrganizer             Boolean                  @default(false)
+  referralCode                 String
+  DisountPercentage            Int
+  PointsBalance                Int
+  DiscountCouponExpirationDate DateTime?
+  Referral                     Referral?
+  Point                        Point?
+  DiscountCouponExchange       DiscountCouponExchange[]
+  Transaction                  Transaction[]
+}
+
+model Referral {
+  id              Int      @id @default(autoincrement())
+  referralOwner   User     @relation(fields: [referralOwnerId], references: [id])
+  referralOwnerId Int      @unique
+  referralCode    String   @unique
+  expirationDate  DateTime
+}
+
+model Point {
+  id             Int      @id @default(autoincrement())
+  userId         Int      @unique
+  user           User     @relation(fields: [userId], references: [id])
+  amount         Int
+  expirationDate DateTime
+}
+
+model DiscountCouponExchange {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  user           User     @relation(fields: [userId], references: [id])
+  amount         Float
+  expirationDate DateTime
+}
+
+model Organizer {
+  id    Int     @id @default(autoincrement())
+  name  String
+  Event Event[]
+}
+
+model Event {
+  id          Int           @id @default(autoincrement())
+  organizerId Int
+  organizer   Organizer     @relation(fields: [organizerId], references: [id])
+  name        String
+  image       String        @db.LongText
+  description String        @db.LongText
+  price       Float
+  location    String
+  eventDate   DateTime
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id              Int      @id @default(autoincrement())
+  userId          Int
+  user            User     @relation(fields: [userId], references: [id])
+  eventId         Int
+  event           Event    @relation(fields: [eventId], references: [id])
+  transactionDate DateTime
+  totalAmount     Float
+}
