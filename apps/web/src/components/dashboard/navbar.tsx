@@ -3,6 +3,7 @@ import { IoIosMore } from 'react-icons/io';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import CreateEvent from './createEvent';
 import CreateEvent2 from './createEvent2';
+import Link from 'next/link';
 
 export default function Navbar() {
   return (
@@ -20,7 +21,7 @@ export default function Navbar() {
               className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>Profile</a>
+                <Link href={"/dashboard/profile"}>Profile</Link>
               </li>
               <li>
                 <a>Logout</a>

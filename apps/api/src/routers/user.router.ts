@@ -18,6 +18,7 @@ export class UserRouter {
         this.router.post('/', this.userController.createUser)
         this.router.get("/verifyuser", this.verifyToken.verifyToken, this.userController.userActivate)
         this.router.post('/login', this.userController.userLogin)
+        this.router.get('/profile', this.verifyToken.verifyToken, this.userController.getSession)
 
     }
 

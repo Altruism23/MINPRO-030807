@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { uploader } from '@/helpers/uploader';
 import { connect } from 'formik';
+import prisma from '@/prisma';
 
-const prisma = new PrismaClient();
 
 export class EventController {
   async getEvents(req: Request, res: Response) {
@@ -36,6 +36,7 @@ export class EventController {
       const newEvent = await prisma.event.create({
         data: {
           ...req.body,
+          price: +price,
           organizer: {
             connect: {
               id: req.organizer?.id

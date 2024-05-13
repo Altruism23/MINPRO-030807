@@ -4,7 +4,10 @@ import { verify } from 'jsonwebtoken'
 export class UserMiddleware {
     verifyToken(req: Request, res: Response, next: NextFunction) {
         try {
-            let token = req.headers.authorization?.replace("Bearer ", "")
+            console.log(req.headers.cookie?.replace("session=", ""));
+            
+            // let token = req.headers.authorization?.replace("Bearer ", "")
+            let token = req.headers.cookie?.replace("session=", "")
             if (!token) throw "Token Empty"
 
             const verifyUser = verify(token, process.env.KEY_JWT!)

@@ -160,6 +160,7 @@ export class UserController {
 
       const payload = {
         id: user.id,
+        username: user.username,
         isActive: user.isActive
       };
 
@@ -178,5 +179,28 @@ export class UserController {
         message: err,
       });
     }
+  }
+
+  async getSession (req: Request, res: Response) {
+    try {
+      const session = await prisma.user.findUnique({
+        where: {
+          id: req.user?.id
+        }, select: {
+          username: true,
+          email: true,
+          firstName: true,
+          lastName: true
+        }
+      })
+      res.json(session)
+    } catch (err) {
+      console.log(err)
+      res.status(400).send({
+        status: "error",
+        message: err
+      })
+    }
+    
   }
 }
