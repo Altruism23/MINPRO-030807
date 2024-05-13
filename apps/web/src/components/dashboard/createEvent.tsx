@@ -1,5 +1,4 @@
 "use client"
-import { now } from "cypress/types/lodash"
 import { useEffect, useRef, useState } from "react"
 
 export default function CreateEvent() {
