@@ -10,60 +10,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sample {
-  id        Int      @id @default(autoincrement())
-  name      String
-  code      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("samples") // if you want to use snake_case format
-}
-
 model User {
-  id                           Int                      @id @default(autoincrement())
-  username                     String                   @unique
-  email                        String                   @unique
-  password                     String
-  isEventOrganizer             Boolean                  @default(false)
-  referralCode                 String
-  DisountPercentage            Int
-  PointsBalance                Int
-  DiscountCouponExpirationDate DateTime?
-  Referral                     Referral?
-  Point                        Point?
-  DiscountCouponExchange       DiscountCouponExchange[]
-  Transaction                  Transaction[]
-}
-
-model Referral {
-  id              Int      @id @default(autoincrement())
-  referralOwner   User     @relation(fields: [referralOwnerId], references: [id])
-  referralOwnerId Int      @unique
-  referralCode    String   @unique
-  expirationDate  DateTime
+  id           Int           @id @default(autoincrement())
+  firstName    String
+  lastName     String
+  username     String        @unique
+  email        String        @unique
+  password     String
+  isActive     Boolean       @default(false)
+  referralCode String?       @unique
+  Point        Point[]
+  Transaction  Transaction[]
+  Discount     Discount[]
 }
 
 model Point {
   id             Int      @id @default(autoincrement())
-  userId         Int      @unique
+  userId         Int
   user           User     @relation(fields: [userId], references: [id])
   amount         Int
   expirationDate DateTime
 }
 
-model DiscountCouponExchange {
-  id             Int      @id @default(autoincrement())
-  userId         Int
-  user           User     @relation(fields: [userId], references: [id])
-  amount         Float
-  expirationDate DateTime
-}
-
 model Organizer {
-  id    Int     @id @default(autoincrement())
-  name  String
-  Event Event[]
+  id            Int     @id @default(autoincrement())
+  organizerName String  @unique
+  email         String  @unique
+  password      String
+  isActive      Boolean @default(false)
+  Event         Event[]
 }
 
 model Event {
@@ -71,12 +46,21 @@ model Event {
   organizerId Int
   organizer   Organizer     @relation(fields: [organizerId], references: [id])
   name        String
-  image       String        @db.LongText
+  image       String?       @db.LongText
   description String        @db.LongText
   price       Float
   location    String
-  eventDate   DateTime
+  startDate   DateTime
+  endDate     DateTime
   Transaction Transaction[]
+}
+
+model Discount {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  disocount      Int
+  expirationDate DateTime
+  user           User     @relation(fields: [userId], references: [id])
 }
 
 model Transaction {
