@@ -16,8 +16,8 @@ export default function Navcrot() {
     const checkLoginStatus = async () => {
         try {
             // Kirim request ke backend untuk memeriksa status login
-            const response = await axios.get('/api/checkLoginStatus');
-            const { loggedIn, role } = response.data;
+            const response = await fetch('/api/checkLoginStatus');
+            const { loggedIn, role } = response;
             setLoggedIn(loggedIn);
             setUserRole(role);
         } catch (error) {
@@ -29,13 +29,13 @@ export default function Navcrot() {
     const handleLogin = async (role: any ) => {
         try {
             // Kirim request ke backend untuk melakukan login
-            const response = await axios.post('/api/login', { role });
-            if (response.data.success) {
+            const response = await fetch('/api/login', { role });
+            if (response.ok) {
                 // Login berhasil, perbarui status login dan peran pengguna
                 setLoggedIn(true);
                 setUserRole(role);
             } else {
-                console.error("Login failed:", response.data.error);
+                console.error("Login failed:", response);
             }
         } catch (error) {
             console.error("Error logging in:", error);
@@ -46,13 +46,13 @@ export default function Navcrot() {
     const handleLogout = async () => {
         try {
             // Kirim request ke backend untuk melakukan logout
-            const response = await axios.post('/api/logout');
-            if (response.data.success) {
+            const response = await fetch('/api/logout');
+            if (response.ok) {
                 // Logout berhasil, perbarui status login dan peran pengguna
                 setLoggedIn(false);
                 setUserRole(null);
             } else {
-                console.error("Logout failed:", response.data.error);
+                console.error("Logout failed:", response);
             }
         } catch (error) {
             console.error("Error logging out:", error);
