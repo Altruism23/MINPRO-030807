@@ -3,8 +3,8 @@ import { GiConsoleController, GiOldMicrophone } from "react-icons/gi";
 
 export default function Buble() {
     return (
-        <div>
-            <div className="flex-col sm:justify-between md:justify-center xl:justify-center xl:items-center">
+        <div className="">
+            <div className="flex flex-wrap mx-auto sm:justify-between md:flex-row md:justify-center xl:justify-center xl:items-center">
                 <button>
                     <div className="border bg-orange-700 w-32 h-32 flex flex-col
             justify-center items-center rounded-full mx-5">
