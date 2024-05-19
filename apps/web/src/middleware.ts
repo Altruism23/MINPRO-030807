@@ -4,7 +4,7 @@ import { getSession } from './lib/session';
 
 const protectedPages = {
     user: ['/dashboard/user/profile', '/dashboard/user'],
-    organizer: ['/dashboard/organizer/profile', '/dashboard/organizer']
+    organizer: ['/dashboard/organizer/profile', '/dashboard/organizer', '/dashboard/organizer/events']
 };
 
 export async function middleware(request: NextRequest) {
