@@ -54,7 +54,6 @@ export default function Page() {
       alert('Error Registration');
     }
     actions.resetForm();
-    actions.setSubmitting(false);
   };
 
   return (
