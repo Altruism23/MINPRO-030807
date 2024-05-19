@@ -8,7 +8,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        "latar-pattern": "url('/pict/latar.jpeg')"
+      },
+    },
   },
   plugins: [
     require('daisyui'),
