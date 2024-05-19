@@ -3,11 +3,14 @@ type User = {
     isOrganizer: boolean
     username: string
     referralCode: string
+    email: string
 }
 
 type Organizer = {
     id: number
-    organizername: string
+    organizerName: string
+    isUser: boolean
+    email: string
 }
 
 type Events = {

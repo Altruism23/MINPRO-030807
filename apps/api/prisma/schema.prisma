@@ -17,7 +17,9 @@ model User {
   username     String        @unique
   email        String        @unique
   password     String
+  image        String?       @db.LongText
   isActive     Boolean       @default(false)
+  isOrganizer  Boolean       @default(false)
   referralCode String?       @unique
   Point        Point[]
   Transaction  Transaction[]
@@ -37,6 +39,8 @@ model Organizer {
   organizerName String  @unique
   email         String  @unique
   password      String
+  image         String? @db.LongText
+  isUser        Boolean @default(false)
   isActive      Boolean @default(false)
   Event         Event[]
 }
@@ -48,6 +52,7 @@ model Event {
   name        String
   image       String?       @db.LongText
   description String        @db.LongText
+  slug        String?        @unique
   price       Float
   location    String
   startDate   DateTime
@@ -71,4 +76,15 @@ model Transaction {
   event           Event    @relation(fields: [eventId], references: [id])
   transactionDate DateTime
   totalAmount     Float
+  ticket          Int
+  total           Int
+  imageUrl        String?  @db.LongText
+  cretedAt        DateTime
+  status          Status   @default(PENDING)
+}
+
+enum Status {
+  PAID
+  PENDING
+  CANCEL
 }

@@ -8,7 +8,11 @@ import prisma from '@/prisma';
 export class EventController {
   async getEvents(req: Request, res: Response) {
     try {
-      const events = await prisma.event.findMany();
+      const events = await prisma.event.findMany({
+        where: {
+          organizerId: req.organizer?.id
+        }
+      });
       res.status(200).send({
         status: 'ok',
         events,
@@ -25,14 +29,12 @@ export class EventController {
     try {
       const { name, description, price, location, organizerId } = req.body;
       const imageUrl = req.file ? `http://localhost:8000/public/uploads/${req.file.filename}` : null;
-
+      const slug = req.body.name.toLowerCase().replaceAll(" ", "-")
       if (!name || !description || !price || !location) {
         throw new Error('Missing required fields');
       }
-
     
       console.log(req.organizer)
-      
       const newEvent = await prisma.event.create({
         data: {
           ...req.body,
@@ -43,6 +45,7 @@ export class EventController {
             }
           },
           image: imageUrl,
+          slug
         },
       });
       res.status(201).send({
@@ -56,6 +59,28 @@ export class EventController {
         status: 'error',
         Message: err,
       });
+    }
+  }
+
+  async getEventSlug (req: Request, res: Response) {
+    try {
+      const details = await prisma.event.findUnique({
+        where: {
+          slug: req.params.slug
+        }
+      })
+      res.status(200).send({
+        status: 'ok',
+        details: {
+          ...details
+        }
+      })
+    } catch (err) {
+      console.log(err)
+      res.status(400).send({
+        status: 'error',
+        message: err
+      })
     }
   }
 

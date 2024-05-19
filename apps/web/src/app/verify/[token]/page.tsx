@@ -1,5 +1,6 @@
 'use client'
 
+import { activateOrganizer } from '@/lib/organizer/activateOrganizer';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
@@ -7,15 +8,7 @@ export default function Page() {
   const params = useParams();
   const handleVerify = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/organizers/verifyorganizer', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${params.token}`,
-        },
-      });
-      const data = await res.json();
-      console.log(data);
+      await activateOrganizer(params.token)
       alert('Verify Success');
     } catch (err) {
       console.log(err);

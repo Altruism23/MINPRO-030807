@@ -8,7 +8,7 @@ export default async function Home() {
   <div>
     Hello
     <h1>
-      {session?.username}
+      A
     </h1>
   </div>
  )

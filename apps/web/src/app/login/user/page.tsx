@@ -1,4 +1,4 @@
-import LoginForm from '../../../components/login/LoginForm';
+import LoginFormUser from '../../../components/login/user/LoginFormUser';
 import { cookies } from 'next/headers';
 
 export default async function Page() {
@@ -16,7 +16,7 @@ export default async function Page() {
     <div className="flex justify-center w-full p-32 h-full">
       <div className="flex flex-col shadow-2xl p-32 gap-4">
         <p className="flex justify-center text-xl text-blue-600">Login</p>
-        <LoginForm/>
+        <LoginFormUser/>
       </div>
     </div>
   );
