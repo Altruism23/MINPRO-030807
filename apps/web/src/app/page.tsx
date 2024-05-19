@@ -1,3 +1,4 @@
+
 import Buble from "@/components-home/buble";
 import Card from "@/components-home/card";
 import Descrip from "@/components-home/descrip";
@@ -41,3 +42,4 @@ export default function Page() {
     </div>
   )
 }
+

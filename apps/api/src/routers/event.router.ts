@@ -19,6 +19,8 @@ export class EventRouter{
 
     private initializeRoutes(): void {
         this.router.post('/', uploader("","/uploads").single('file'), this.organizerMiddleware.verifyToken,this.eventController.createEvent)
+        this.router.get('/slug', this.organizerMiddleware.verifyToken, this.eventController.getEventSlug)
+        this.router.get('/getevents/:slug', this.organizerMiddleware.verifyToken, this.eventController.getEvents)
     }
     
     getRouter(): Router {
